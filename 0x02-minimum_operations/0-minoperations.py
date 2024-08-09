@@ -4,8 +4,7 @@
 A python script to solve the "H" file manipulation challenge!
 """
 
-
-def minOperations(n):
+def minOperations(n: int) -> int:
     """
     A method that calculates the fewest number of operations needed to result
     in exactly n H characters in a file
