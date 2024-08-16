@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 A script that reads stdin line by line and computes metrics
 """
@@ -59,5 +59,6 @@ def print_codes(signal, frame):
             print(f"{key}: {status_codes[key]}")
 
 
-signal.signal(signal.SIGINT, print_codes)
-log_parser()
+if __name__ == "__main__":
+    signal.signal(signal.SIGINT, print_codes)
+    log_parser()
