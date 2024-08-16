@@ -1,64 +1,39 @@
 #!/usr/bin/python3
 """
-A script that reads stdin line by line and computes metrics
+Log parsing
 """
 
 import sys
-import signal
 
+if __name__ == '__main__':
 
-status_codes = {
-    200: 0,
-    301: 0,
-    400: 0,
-    401: 0,
-    403: 0,
-    404: 0,
-    405: 0,
-    500: 0
-}
-total_size = 0
-counter = 1
+    filesize, count = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    stats = {k: 0 for k in codes}
 
+    def print_stats(stats: dict, file_size: int) -> None:
+        print("File size: {:d}".format(filesize))
+        for k, v in sorted(stats.items()):
+            if v:
+                print("{}: {}".format(k, v))
 
-def log_parser():
-    """
-    Analyze logs and print stats
-    """
-    global counter
-    global total_size
-    global status_codes
-
-    for line in sys.stdin:
-        try:
-            line = line.strip()
-            analysis = line.split(" ")
-
-            size = int(analysis[-1])
-            total_size += size
-
-            code = int(analysis[-2])
-            status_codes[code] += 1
-            counter += 1
-            if not counter % 10:
-                print_codes(status_codes, total_size)
-        except ValueError as e:
-            pass
-
-
-def print_codes(signal, frame):
-    """
-    Print stats
-    """
-    global status_codes
-    global total_size
-
-    print(f"File size: {total_size}")
-    for key in status_codes.keys():
-        if status_codes[key]:
-            print(f"{key}: {status_codes[key]}")
-
-
-if __name__ == "__main__":
-    signal.signal(signal.SIGINT, print_codes)
-    log_parser()
+    try:
+        for line in sys.stdin:
+            count += 1
+            data = line.split()
+            try:
+                status_code = data[-2]
+                if status_code in stats:
+                    stats[status_code] += 1
+            except BaseException:
+                pass
+            try:
+                filesize += int(data[-1])
+            except BaseException:
+                pass
+            if count % 10 == 0:
+                print_stats(stats, filesize)
+        print_stats(stats, filesize)
+    except KeyboardInterrupt:
+        print_stats(stats, filesize)
+        raise
