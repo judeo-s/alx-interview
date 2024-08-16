@@ -18,7 +18,7 @@ status_codes = {
     500: 0
 }
 total_size = 0
-counter = 0
+counter = 1
 
 
 def log_parser():
