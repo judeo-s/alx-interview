@@ -59,7 +59,6 @@ def nqueens(n):
     pos_diag = set()
     neg_diag = set()
     board = [[0] * n for i in range(n)]
-
     backtrack(0, n, cols, pos_diag, neg_diag, board)
 
 

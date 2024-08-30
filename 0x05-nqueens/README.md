@@ -19,4 +19,5 @@ contains the positions of the N queens in the format (row, column).
 Example:
     >>> nqueens(4)
     [[(0, 0), (1, 2), (2, 1), (3, 3)], [(0, 1), (1, 3), (2, 0), (3, 2)]]
+
 """
