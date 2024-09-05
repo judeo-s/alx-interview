@@ -7,7 +7,7 @@ const movieID = process.argv[2];
 const url = `https://swapi-api.alx-tools.com/api/films/${movieID}`;
 const request = require('request');
 
-function printNextCharacter(urls) {
+function printNextCharacter (urls) {
   const characterURL = urls.shift();
   if (characterURL) {
     request(characterURL, function (error, response, body) {
@@ -19,7 +19,7 @@ function printNextCharacter(urls) {
   }
 }
 
-function printStarWarsCharacters(url) {
+function printStarWarsCharacters (url) {
   request(url, function (error, response, body) {
     if (!error) {
       printNextCharacter(JSON.parse(body).characters);
